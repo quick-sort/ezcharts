@@ -1,0 +1,13 @@
+@import url(~antd/dist/antd.css);
+.ezcharts .ant-select {
+  min-width: 38px;
+}
+.ezcharts .ant-input-group {
+  margin-bottom: 5px;
+}
+.ezcharts .ant-divider-horizontal {
+  margin: 12px 0;
+}
+.ezcharts-panel {
+  background: #FFF;
+}
