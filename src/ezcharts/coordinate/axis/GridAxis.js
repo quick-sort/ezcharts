@@ -52,7 +52,7 @@ export default class GridAxis extends Component {
           </Col>
       </Row>
       <Row>
-          <Col span={12}>标签旋转</Col>
+          <Col span={12}>标签间隔</Col>
           <Col span={12}>
             <InputNumber
             value={axisLabel.interval}

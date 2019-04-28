@@ -9,8 +9,15 @@ export default class DatasetPanel extends Component {
     option: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
   };
+  onCsvRemove = file => {
+    const { onChange, onRemove } = this.props;
+    onChange({ '$pull': { dataset: { id: file.uid } } })
+    if (onRemove) {
+      onRemove(file.uid)
+    }
+  }
   onCsvUpload = file => {
-    const { onChange } = this.props;
+    const { onChange, onUpload } = this.props;
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
@@ -19,6 +26,9 @@ export default class DatasetPanel extends Component {
           skip_empty_lines: true,
         });
         onChange({ '$push': { dataset: { id: file.name, source: data, sourceHeader: true } } });
+        if (onUpload) {
+          onUpload({name: file.name, data: reader.result})
+        }
       });
       if (file.name.toLowerCase().endsWith('.csv')) {
         reader.readAsText(file);
@@ -44,7 +54,7 @@ export default class DatasetPanel extends Component {
     </Popover>
   }
   render() {
-    const { option, onChange } = this.props;
+    const { option } = this.props;
     const { dataset = [] } = option
     const fileList = dataset.map((i, idx) => ({
       uid: i.id,
@@ -55,7 +65,7 @@ export default class DatasetPanel extends Component {
       <div>
         <Dragger
           action={this.onCsvUpload}
-          onRemove={file => onChange({ '$pull': { dataset: { id: file.uid } } })}
+          onRemove={this.onCsvRemove}
           fileList={fileList}
         >
           <Icon type="upload" />

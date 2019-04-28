@@ -15,9 +15,9 @@ export default class Line extends Component {
     const { option, item } = props
     const { xAxis = [] } = option
     const { xAxisIndex = 0 } = item
-    let gridIndex = -1
+    let gridIndex = 0
     if (xAxis.length > 0) {
-      gridIndex = xAxis[xAxisIndex].gridIndex
+      gridIndex = xAxis[xAxisIndex].gridIndex || 0
     }
     this.state = { gridIndex }
   }
@@ -27,11 +27,11 @@ export default class Line extends Component {
   render() {
     const { onChange, option, item } = this.props
     const { xAxis, yAxis, dataset, grid } = option
-    const { encode = {} } = item
+    const { encode = {}, datasetIndex = 0, seriesLayoutBy = 'column' } = item
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
-    let encodeOptions = (dataset[item.datasetIndex] || { source: [[]] }).source[0];
-    if (item.seriesLayoutBy !== 'column') {
-      encodeOptions = (dataset[item.datasetIndex] || { source: [] }).source.map(i => i[0]);
+    let encodeOptions = (dataset[datasetIndex] || { source: [[]] }).source[0];
+    if (seriesLayoutBy !== 'column') {
+      encodeOptions = (dataset[datasetIndex] || { source: [] }).source.map(i => i[0]);
     }
     return <div>
       <Row>
@@ -50,7 +50,7 @@ export default class Line extends Component {
           <Tooltip title="数据集" >
             <Select
             key="datasetIndex"
-            value={item.datasetIndex}
+            value={datasetIndex}
             onChange={value => onChange({ '$set': { 'series.$[i].datasetIndex': value } }, filter)}
             >
             {dataset.map((i, idx) => (
@@ -65,7 +65,7 @@ export default class Line extends Component {
             style={{marginLeft: 10}}
             checkedChildren="列"
             unCheckedChildren="行"
-            checked={item.seriesLayoutBy === 'column'}
+            checked={seriesLayoutBy === 'column'}
             onChange={value =>
               onChange(
                 { '$set': { 'series.$[i].seriesLayoutBy': value ? 'column' : 'row' } },
@@ -85,7 +85,8 @@ export default class Line extends Component {
             onChange={value => onChange({'$set': {'series.$[i].xAxisIndex': value}}, filter)}
             >
       {xAxis.map((i, idx) => {
-        if (i.gridIndex === this.state.gridIndex) {
+        const { gridIndex = 0 } = i
+        if (gridIndex === this.state.gridIndex) {
           return <Option key={'xAxis'+idx} value={idx}>xAxis{idx+1}</Option>
         }
         return null
@@ -102,7 +103,7 @@ export default class Line extends Component {
           >
             {encodeOptions.map(i => (
               <Option key={'encode-x-' + i} value={i}>
-                {i}
+                {i ? i: <span>&nbsp;</span>}
               </Option>
             ))}
           </Select>
@@ -116,7 +117,8 @@ export default class Line extends Component {
             onChange={value => onChange({'$set': {'series.$[i].yAxisIndex': value}}, filter)}
             >
       {yAxis.map((i, idx) => {
-        if (i.gridIndex === this.state.gridIndex) {
+        const { gridIndex = 0 } = i
+        if (gridIndex === this.state.gridIndex) {
           return <Option key={'yAxis'+idx} value={idx}>yAxis{idx+1}</Option>
         }
         return null
@@ -138,7 +140,7 @@ export default class Line extends Component {
             {encodeOptions.map(i => {
               if (firstValue(encode.x) !== i) {
                 return <Option key={'encode-x-' + i} value={i}>
-                  {i}
+                  {i ? i: <span>&nbsp;</span>}
                   </Option>
               }
               return null

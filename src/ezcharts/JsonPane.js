@@ -25,7 +25,7 @@ export default class JsonPanel extends Component {
     return <div>
       <Button icon="code" type="primary" onClick={this.toggleDrawer} >编辑JSON</Button>
       <Drawer
-        width={500}
+        width={600}
         placement="right"
         closable={false}
         onClose={this.toggleDrawer}

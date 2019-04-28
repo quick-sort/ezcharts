@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Divider, Layout } from 'antd';
+import { Input, Divider, Layout } from 'antd';
 import ReactEcharts from 'echarts-for-react';
 import mongobj from 'mongobj';
 import { toSafeOption } from './utils'
@@ -17,8 +17,7 @@ export default class EzCharts extends Component {
     if (option) {
       return {
         option: {
-          id: option.id,
-          title: option.title,
+          ...option,
           grid: option.grid || [{ id: uuidv4(), containLabel: true }],
           dataset: option.dataset || [],
           xAxis: option.xAxis || [
@@ -48,28 +47,8 @@ export default class EzCharts extends Component {
     const { defaultOption = {}, option = {} } = props;
     this.state = {
       option: {
-        title: option.title || 'chart',
-        grid: option.grid ||
-          defaultOption.grid || [{ id: uuidv4(), containLabel: true }],
-        dataset: option.dataset || defaultOption.dataset || [],
-        xAxis: option.xAxis ||
-          defaultOption.xAxis || [
-            {
-              id: uuidv4(),
-              type: 'category',
-              gridIndex: 0,
-              axisLabel: { rotate: 0, interval: 0 },
-            }],
-        yAxis: option.yAxis ||
-            defaultOption.yAxis || [
-            {
-              id: uuidv4(),
-              type: 'value',
-              gridIndex: 0,
-              axisLabel: { rotate: 0, interval: 0 },
-            }
-          ],
-        series: option.series || defaultOption.series || [],
+        ...defaultOption,
+        ...option
       },
     };
   }
@@ -79,18 +58,21 @@ export default class EzCharts extends Component {
       this.props.onChange(option);
     }
   }
-  onChange = (changes, options) => {
+  onChange = (changes, changesOpt) => {
     const { option } = this.state;
-    const newOption = mongobj.update({ ...option }, changes, options);
+    const newOption = mongobj.update({ ...option }, changes, changesOpt);
     this.setState({ option: newOption });
     if (this.props.onChange) {
-      this.props.onChange(newOption, changes, options);
+      this.props.onChange(newOption);
     }
   };
-  ;
+  onChangeTitle = (evt) => {
+    this.onChange({'$set': {'title.text': evt.target.value}})
+  };
   render() {
     const { option } = this.state;
-    const { style = {height: 600}, onEvents = {} } = this.props
+    const { title = {} } = option
+    const { style = {height: 600}, onEvents = {}, onCsvUpload, onCsvRemove } = this.props
 
     return (
       <Layout className="ezcharts">
@@ -100,7 +82,14 @@ export default class EzCharts extends Component {
           </Content>
         </Layout>
         <Sider className="ezcharts-panel" theme="light" width={220} >
-          <DatasetPane option={option} onChange={this.onChange} />
+          <Input
+            value={title.text}
+            placeholder="图表名称"
+            style={{width: 200}}
+            onChange={this.onChangeTitle}
+          />
+          <Divider />
+          <DatasetPane option={option} onChange={this.onChange} onRemove={onCsvRemove} onUpload={onCsvUpload} />
           <Divider />
           <SeriesPane option={option} onChange={this.onChange} />
           <Divider />

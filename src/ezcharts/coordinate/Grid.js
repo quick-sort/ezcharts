@@ -98,7 +98,7 @@ export default class Grid extends Component {
               max={100}
               style={{width: 65}}
               formatter={value => `${i[0].toUpperCase()} ${value}%`}
-              parser={value => value.replace(/[a-z%]*/g, '')}
+              parser={value => value.replace(/[a-zA-Z %]*/g, '')}
               value={i in item ? item[i].replace('%', '') : 10}
               onChange={value => onChange({ '$set': { [`grid.$[i].${i}`]: value + '%' } }, filter)}
             />
