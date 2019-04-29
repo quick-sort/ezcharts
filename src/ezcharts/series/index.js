@@ -58,7 +58,8 @@ export default class Series extends Component {
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
     onChange({
       '$set': {
-        'series.$[i].type': value
+        'series.$[i].type': value,
+        'series.$[i].encode': {}
       }
     }, filter)
   }
@@ -107,7 +108,7 @@ export default class Series extends Component {
       <Tooltip title="删除">
       <Button
         size="small"
-        icon="close"
+        icon="delete"
         type="danger"
         style={{color: '#eb2f96'}}
       />

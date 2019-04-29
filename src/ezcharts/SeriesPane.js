@@ -13,7 +13,6 @@ export default class SeriesPane extends Component {
   }
   state = {
     datasetIndex: 0,
-    name: '',
     type: 'line'
   }
 
@@ -22,9 +21,6 @@ export default class SeriesPane extends Component {
     Series.OnCreate(onChange, this.state)
   }
 
-  onChangeName = (evt) => {
-    this.setState({name: evt.target.value})
-  }
   onChangeDataset = (value) => {
     this.setState({datasetIndex: value})
   }
@@ -49,15 +45,6 @@ export default class SeriesPane extends Component {
             ))}
       </Select>
       </Tooltip>
-      <Input
-        value={this.state.name}
-        size='small'
-        placeholder="系列名称"
-        style={{width: 130}}
-        onChange={this.onChangeName}
-      />
-      </Input.Group>
-      <Input.Group compact>
       <Tooltip title="选择数据集">
       <Select
           onChange={this.onChangeDataset}

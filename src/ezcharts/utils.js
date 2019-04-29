@@ -1,37 +1,40 @@
 import Formatter from './series/components/Formatter'
 
-function filterDataset(options) {
-  const { series = [], dataset = [] } = options
-  const datasetSize = dataset.length
-  return {
-    ...options,
-    series: series.filter(s => (!s.datasetIndex && datasetSize > 0) || (s.datasetIndex < datasetSize))
-  }
-}
-
 function filterGridAxis(options) {
   const { xAxis, yAxis, grid = [] } = options
   const gridSize = grid.length
+  function filterAxis(a) {
+    const { gridIndex = 0 } = a
+    return gridIndex < gridSize && gridIndex >= 0
+  }
   return {
     ...options,
-    xAxis: xAxis ? xAxis.filter(a => (!a.gridIndex && gridSize > 0) || (a.gridIndex < gridSize)): undefined,
-    yAxis: yAxis ? yAxis.filter(a => (!a.gridIndex && gridSize > 0) || (a.gridIndex < gridSize)): undefined
+    xAxis: xAxis ? xAxis.filter(filterAxis): undefined,
+    yAxis: yAxis ? yAxis.filter(filterAxis): undefined
   }
 }
 
 function filterSeries(options) {
-  const { series, xAxis = [], yAxis = [] } = options
+  const { series, xAxis = [], yAxis = [], grid = [], dataset = [] } = options
+  const datasetSize = dataset.length
   const xAxisSize = xAxis.length
   const yAxisSize = yAxis.length
   return {
     ...options,
     series: series ? series.filter(s => {
-      const { type = 'line' } = s
+      const { type = 'line', datasetIndex = 0 } = s
+      if (datasetIndex >= datasetSize || datasetIndex < 0) {
+        return false
+      }
       switch(type) {
         case 'line':
         case 'bar':
           const { xAxisIndex = 0, yAxisIndex = 0 } = s
-          return xAxisIndex < xAxisSize && yAxisIndex < yAxisSize
+          if (xAxisIndex >= xAxis.length || xAxisIndex < 0) return false
+          if (yAxisIndex >= yAxis.length || xAxisIndex < 0) return false
+          const { gridIndex:xGridIndex = 0 } = xAxis[xAxisIndex]
+          const { gridIndex:yGridIndex = 0 } = yAxis[yAxisIndex]
+          return xAxisIndex < xAxisSize && yAxisIndex < yAxisSize && xGridIndex === yGridIndex && xGridIndex < grid.length
         default:
           return true
       }
@@ -39,9 +42,8 @@ function filterSeries(options) {
   }
 }
 function toSafeOption(options) {
-  options = filterDataset(options)
-  options = filterGridAxis(options)
   options = filterSeries(options)
+  options = filterGridAxis(options)
 
   options.timestamp = new Date()
   options.color = [

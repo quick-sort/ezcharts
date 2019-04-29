@@ -127,8 +127,8 @@ export default class Formatter extends Component {
     return <span>
       <Select onChange={this.onChange} value={getFormatterType(formatter)} showArrow={false}>
         <Option key="template" value="template">字符串模板</Option>
-        <Option key="baseUnit" value="baseUnit">基数单位</Option>
-        <Option key="pieBaseUnit" value="pieBaseUnit">基数单位百分比</Option>
+        <Option key="baseUnit" value="baseUnit">基数+单位</Option>
+        <Option key="pieBaseUnit" value="pieBaseUnit">饼图+基数+单位</Option>
       </Select>
       {this.renderFormatter()}
     </span>

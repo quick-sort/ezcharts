@@ -15,14 +15,22 @@ export default class Line extends Component {
     const { option, item } = props
     const { xAxis = [] } = option
     const { xAxisIndex = 0 } = item
-    let gridIndex = 0
-    if (xAxis.length > 0) {
-      gridIndex = xAxis[xAxisIndex].gridIndex || 0
+    if (xAxisIndex < xAxis.length ) {
+      const { gridIndex = 0 } = xAxis[xAxisIndex]
+      this.state = { gridIndex }
+    } else {
+      this.state = { gridIndex: -1 }
     }
-    this.state = { gridIndex }
   }
   onChangeGrid = (value) => {
     this.setState({gridIndex: value})
+    const { onChange, option, item } = this.props
+    const { xAxis, yAxis } = option
+    const filter = { arrayFilters: [{ 'i.id': item.id }] };
+    onChange({'$set': {
+      'series.$[i].xAxisIndex': xAxis.findIndex(i => (i.gridIndex || 0) === value),
+      'series.$[i].yAxisIndex': yAxis.findIndex(i => (i.gridIndex || 0) === value)
+    }}, filter)
   }
   render() {
     const { onChange, option, item } = this.props
@@ -97,7 +105,7 @@ export default class Line extends Component {
         <Col span={12}>
           <Select
             key="encode-x"
-            value={firstValue(encode.x)}
+            value={firstValue(encode.x || encodeOptions)}
             style={{ width: 100 }}
             onChange={value => onChange({ '$set': { 'series.$[i].encode.x': value } }, filter)}
           >
@@ -129,7 +137,7 @@ export default class Line extends Component {
         <Col span={12}>
           <Select
             key="encode-y"
-            value={firstValue(encode.y)}
+            value={firstValue(encode.y || encodeOptions.slice(1))}
             style={{ width: 120 }}
             onChange={value => onChange({
               '$set': {

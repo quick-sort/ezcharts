@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, Row, Col, Input, Switch } from 'antd';
+import { InputNumber, Collapse, Row, Col, Input, Switch } from 'antd';
 import Label from './components/Label'
 import GridEncode from './components/GridEncode'
 
@@ -25,9 +25,9 @@ export default class Line extends Component {
             checked={item.stack}
             onChange={value => {
               if (value) {
-                onChange({ '$set': { 'series.$[i].stack': 'total' } }, filter)
+                onChange({ '$set': { 'series.$[i].stack': 'total', 'series.$[i].areaStyle': {} } }, filter)
               } else {
-                onChange({ '$unset': {'series.$[i].stack': ''}}, filter)
+                onChange({ '$unset': {'series.$[i].stack': '', 'series.$[i].areaStyle': ''}}, filter)
               }
               }
             }
@@ -45,6 +45,18 @@ export default class Line extends Component {
           />
         </Col>
       </Row>
+      <Row>
+        <Col span={12}>
+          点大小
+        </Col>
+        <Col span={12}>
+          <InputNumber
+            value={item.symbolSize}
+            onChange={value => onChange({'$set': {'series.$[i].symbolSize': value}}, filter)}
+            />
+        </Col>
+      </Row>
+
       <Collapse>
           <Collapse.Panel key="encode" header="Grid - Dataset">
             <GridEncode {...this.props}/>

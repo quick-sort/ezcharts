@@ -12,12 +12,12 @@ export default class Pie extends Component {
   };
   render() {
     const { onChange, option, item } = this.props
-    const { dataset } = option
+    const { dataset = [] } = option
     const { label = {}, encode = {}, datasetIndex = 0, seriesLayoutBy = 'column' } = item
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
-    let encodeOptions = (option.dataset[datasetIndex] || { source: [[]] }).source[0];
+    let encodeOptions = (dataset[datasetIndex] || { source: [[]] }).source[0];
     if (seriesLayoutBy !== 'column') {
-      encodeOptions = (option.dataset[datasetIndex] || { source: [] }).source.map(i => i[0]);
+      encodeOptions = (dataset[datasetIndex] || { source: [] }).source.map(i => i[0]);
     }
     return <div>
       <Row>
@@ -28,7 +28,7 @@ export default class Pie extends Component {
           <Tooltip title="数据集" >
             <Select
             key="datasetIndex"
-            value={item.datasetIndex}
+            value={datasetIndex}
             onChange={value => onChange({ '$set': { 'series.$[i].datasetIndex': value } }, filter)}
             >
             {dataset.map((i, idx) => (
@@ -43,7 +43,7 @@ export default class Pie extends Component {
             style={{marginLeft: 10}}
             checkedChildren="列"
             unCheckedChildren="行"
-            checked={item.seriesLayoutBy === 'column'}
+            checked={seriesLayoutBy === 'column'}
             onChange={value =>
               onChange(
                 { '$set': { 'series.$[i].seriesLayoutBy': value ? 'column' : 'row' } },

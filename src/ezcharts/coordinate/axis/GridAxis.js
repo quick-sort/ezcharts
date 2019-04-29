@@ -10,7 +10,7 @@ export default class GridAxis extends Component {
   };
   render() {
     const { onChange, item, axisType } = this.props
-    const {axisLabel = {} } = item
+    const {axisLabel = {}, splitLine = {}, type = 'category', inverse} = item
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
     return <div>
       <Row>
@@ -27,6 +27,17 @@ export default class GridAxis extends Component {
               <Option key="category" value="category">类目</Option>
               <Option key="time" value="time">时间</Option>
             </Select>
+          </Col>
+      </Row>
+      <Row>
+          <Col span={12}>反向坐标轴</Col>
+          <Col span={12}>
+            <Switch
+            checkedChildren="反"
+            unCheckedChildren="正"
+            checked={inverse}
+            onChange={value => onChange({ '$set': { [`${axisType}.$[i].inverse`]: value } }, filter)}
+          />
           </Col>
       </Row>
       <Row>
@@ -62,6 +73,18 @@ export default class GridAxis extends Component {
           />
           </Col>
       </Row>
+      <Row>
+          <Col span={12}>显示分隔线</Col>
+          <Col span={12}>
+            <Switch
+            checkedChildren="显示"
+            unCheckedChildren="不显示"
+            checked={type === 'category' ? splitLine.show === true : splitLine.show !== false}
+            onChange={value => onChange({ '$set': { [`${axisType}.$[i].splitLine.show`]: value } }, filter)}
+          />
+          </Col>
+      </Row>
+
     </div>
   }
 }

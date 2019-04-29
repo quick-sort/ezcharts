@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tag, Icon, Upload, Popover } from 'antd';
+import { Button, Icon, Upload, Popover } from 'antd';
 const parseCSV = require('csv-parse/lib/es5/sync');
 const Dragger = Upload.Dragger;
+const uuidv4 = require('uuid/v4');
 
 export default class DatasetPanel extends Component {
   static propTypes = {
@@ -14,6 +15,25 @@ export default class DatasetPanel extends Component {
     onChange({ '$pull': { dataset: { id: file.uid } } })
     if (onRemove) {
       onRemove(file.uid)
+    }
+  }
+  onClickColumn = (datasetIndex, column) => {
+    var that = this
+    return () => {
+      const { onChange } = that.props
+      onChange({'$push': {
+        'series': {
+          'id': uuidv4(),
+          datasetIndex,
+          name: column,
+          seriesLayoutBy: 'column',
+          encode: {
+            y: column,
+            seriesName: column
+          },
+          type: 'line'
+        }
+      }})
     }
   }
   onCsvUpload = file => {
@@ -45,7 +65,7 @@ export default class DatasetPanel extends Component {
     return <Popover
           placement="left"
           content={source[0].map(j => (
-            <Tag key={j}>{j}</Tag>
+            <Button key={j} style={{margin: 1}} size="small" onClick={this.onClickColumn(idx, j)}>{j}</Button>
           ))}
         >
       <Button type="primary" size="small" >

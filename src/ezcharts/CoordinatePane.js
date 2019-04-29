@@ -42,7 +42,7 @@ export default class CoordinatePane extends Component {
           const { gridIndex = 0 } = i
           return gridIndex === index
         })
-        return <Grid {...attr}/>
+        return <Grid {...attr} gridIndex={index}/>
     }
   };
   onChangeType = (type) => {
@@ -76,13 +76,9 @@ export default class CoordinatePane extends Component {
   }
   dataSource = () => {
     const { option } = this.props
-    let ds = []
-    if (option.grid) {
-      ds = ds.concat(option.grid.map((item, idx) => ({type: 'grid', item, index: idx})))
-    }
-    if (option.polar) {
-      ds = ds.concat(option.polar.map((item, idx) => ({type: 'polar', item, index: idx})))
-    }
+    const { grid = [], polar = [] } = option
+    let ds = grid.map((item, idx) => ({type: 'grid', item, index: idx}))
+    ds = ds.concat(polar.map((item, idx) => ({type: 'polar', item, index: idx})))
     return ds
   }
   render() {

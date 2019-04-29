@@ -11,6 +11,14 @@ import JsonPane from './JsonPane'
 const { Content, Sider }  = Layout
 export default class EzCharts extends Component {
   static propTypes = {};
+  static getDerivedStateFromProps(props, state) {
+    const { option } = props;
+    if (option) {
+      return {option}
+    } else {
+      return state;
+    }
+  }
   constructor(props) {
     super(props);
     const { defaultOption = {}, option = {} } = props;

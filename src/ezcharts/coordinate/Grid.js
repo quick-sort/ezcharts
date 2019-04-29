@@ -6,6 +6,7 @@ const uuidv4 = require('uuid/v4');
 
 export default class Grid extends Component {
   static propTypes = {
+    gridIndex: PropTypes.number.isRequired,
     item: PropTypes.object.isRequired,
     xAxis: PropTypes.array.isRequired,
     yAxis: PropTypes.array.isRequired,
@@ -18,10 +19,6 @@ export default class Grid extends Component {
 
   static OnCreate(onChange, option) {
     const gridIndex = option.grid ? option.grid.length: 0
-    const defaultAxis = {
-      gridIndex,
-      axisLabel: { rotate: 0, interval: 0 },
-    }
     onChange({
       '$push': {
         grid: {
@@ -32,14 +29,14 @@ export default class Grid extends Component {
           bottom: '3%'
         },
         xAxis: {
-          ...defaultAxis,
           id: uuidv4(),
           type: 'category',
+          gridIndex
         },
         yAxis: {
-          ...defaultAxis,
           id: uuidv4(),
           type: 'value',
+          gridIndex
         },
       },
     })
@@ -51,10 +48,10 @@ export default class Grid extends Component {
   onRemove = () => {
     const { onChange, item, xAxis = [], yAxis = [] } = this.props
     onChange({'$pull': {
-      grid: {id: item.id}},
+      grid: {id: item.id},
       xAxis: {id: { '$in': xAxis.map(i => i.id) }},
       yAxis: {id: { '$in': yAxis.map(i => i.id) }}
-    })
+    }})
   }
   onRemoveAxis = (id, axisType) => {
     const { onChange } = this.props
@@ -65,14 +62,13 @@ export default class Grid extends Component {
     })
   }
   onAddAxis = (axisType) => {
-    const { onChange } = this.props
+    const { onChange, gridIndex = 0 } = this.props
     onChange({
       '$push': {
         [axisType]: {
           id: uuidv4(),
           type: 'category',
-          gridIndex: 0,
-          axisLabel: { rotate: 0, interval: 0 },
+          gridIndex
         },
       },
     })
@@ -112,7 +108,7 @@ export default class Grid extends Component {
         <Input.Group compact>
           <Button size="small" type='primary' onClick={this.toggleDrawer}>{name}<Icon type="setting"/></Button>
           <Popconfirm placement="left" title="确认删除" onConfirm={this.onRemove}>
-              <Button size="small" type='danger' icon="close"/>
+              <Button size="small" type='danger' icon="delete"/>
           </Popconfirm>
         </Input.Group>
 

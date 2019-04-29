@@ -35,7 +35,7 @@ export default class JsonPanel extends Component {
           height="600"
           language="json"
           theme="vs-dark"
-          value={beautify(toSafeOption(option2), null, 2, 30)}
+          value={beautify(option2, null, 2, 30)}
           option={{
             lineNumbers: 'off',
             glyphMargin: false,
