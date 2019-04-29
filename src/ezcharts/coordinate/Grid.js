@@ -49,8 +49,12 @@ export default class Grid extends Component {
     this.setState({drawerVisible: !this.state.drawerVisible})
   }
   onRemove = () => {
-    const { onChange, item } = this.props
-    onChange({'$pull': {grid: {id: item.id}}})
+    const { onChange, item, xAxis = [], yAxis = [] } = this.props
+    onChange({'$pull': {
+      grid: {id: item.id}},
+      xAxis: {id: { '$in': xAxis.map(i => i.id) }},
+      yAxis: {id: { '$in': yAxis.map(i => i.id) }}
+    })
   }
   onRemoveAxis = (id, axisType) => {
     const { onChange } = this.props

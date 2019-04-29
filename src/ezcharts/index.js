@@ -7,41 +7,10 @@ import DatasetPane from './DatasetPane';
 import CoordinatePane from './CoordinatePane';
 import SeriesPane from './SeriesPane';
 import JsonPane from './JsonPane'
-const uuidv4 = require('uuid/v4');
 
 const { Content, Sider }  = Layout
 export default class EzCharts extends Component {
   static propTypes = {};
-  static getDerivedStateFromProps(props, state) {
-    const { option } = props;
-    if (option) {
-      return {
-        option: {
-          ...option,
-          grid: option.grid || [{ id: uuidv4(), containLabel: true }],
-          dataset: option.dataset || [],
-          xAxis: option.xAxis || [
-            {
-              id: uuidv4(),
-              type: 'category',
-              gridIndex: 0,
-              axisLabel: { rotate: 0, interval: 0 },
-            }],
-          yAxis: option.yAxis || [
-            {
-              id: uuidv4(),
-              type: 'value',
-              gridIndex: 0,
-              axisLabel: { rotate: 0, interval: 0 },
-            },
-          ],
-          series: option.series || [],
-        },
-      };
-    } else {
-      return null;
-    }
-  }
   constructor(props) {
     super(props);
     const { defaultOption = {}, option = {} } = props;

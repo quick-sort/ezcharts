@@ -5,7 +5,7 @@ function filterDataset(options) {
   const datasetSize = dataset.length
   return {
     ...options,
-    series: series.filter(s => !s.datasetIndex || (s.datasetIndex < datasetSize))
+    series: series.filter(s => (!s.datasetIndex && datasetSize > 0) || (s.datasetIndex < datasetSize))
   }
 }
 
@@ -14,8 +14,8 @@ function filterGridAxis(options) {
   const gridSize = grid.length
   return {
     ...options,
-    xAxis: xAxis ? xAxis.filter(a => !a.gridIndex || (a.gridIndex < gridSize)): undefined,
-    yAxis: yAxis ? yAxis.filter(a => !a.gridIndex || (a.gridIndex < gridSize)): undefined
+    xAxis: xAxis ? xAxis.filter(a => (!a.gridIndex && gridSize > 0) || (a.gridIndex < gridSize)): undefined,
+    yAxis: yAxis ? yAxis.filter(a => (!a.gridIndex && gridSize > 0) || (a.gridIndex < gridSize)): undefined
   }
 }
 
