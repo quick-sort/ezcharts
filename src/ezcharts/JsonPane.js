@@ -5,7 +5,7 @@ import MonacoEditor from 'react-monaco-editor';
 import { toSafeOption } from './utils'
 const beautify = require("json-beautify");
 
-export default class JsonPanel extends Component {
+export default class JsonPane extends Component {
   static propTypes = {
     option: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired

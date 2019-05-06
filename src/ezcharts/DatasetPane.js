@@ -5,7 +5,7 @@ const parseCSV = require('csv-parse/lib/es5/sync');
 const Dragger = Upload.Dragger;
 const uuidv4 = require('uuid/v4');
 
-export default class DatasetPanel extends Component {
+export default class DatasetPane extends Component {
   static propTypes = {
     option: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired

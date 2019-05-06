@@ -41,6 +41,29 @@ function filterSeries(options) {
     }): undefined
   }
 }
+function safeDataset(options) {
+  const { dataset = [], series = [] } = options
+  dataset.forEach(i => {
+    const { source = [] } = i
+    if (source.length > 0) {
+      source[0] = source[0].map(i => {
+        if (/^[0-9]+$/.test(i)) {
+          return '_' + i
+        } else {
+          return i
+        }
+      })
+    }
+  })
+  series.forEach(i => {
+    const { encode = {} } = i
+    Object.keys(encode).forEach(k => {
+      if (/^[0-9]+$/.test(encode[k])) {
+        encode[k] = '_' + encode[k]
+      }
+    })
+  })
+}
 function toSafeOption(options) {
   options = filterSeries(options)
   options = filterGridAxis(options)
@@ -67,7 +90,7 @@ function toSafeOption(options) {
       type: 'cross',
     },
   }
-  options.series = options.series.map(i => {
+  options.series = (options.series||[]).map(i => {
     const {label = {}} = i
     const { formatter } = label
     if (formatter) {
@@ -82,6 +105,7 @@ function toSafeOption(options) {
       return i
     }
   })
+  safeDataset(options)
   return options
 }
 function firstValue(value) {
