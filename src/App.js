@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import './ezcharts/index.css';
-import sample_option from './sample_option.json'
+import sample_option from './option.json'
+import dataset from './dataset.json'
 import EzCharts from './ezcharts'
+sample_option.dataset = [{
+  id: 'dataset',
+  source: dataset,
+  sourceHeader: true
+}]
 
 class App extends Component {
   state = {

@@ -13,7 +13,7 @@ export default class Line extends Component {
 
   render() {
     const { onChange, item } = this.props
-    const { label = {} } = item
+    const { label = {}, lineStyle = {} } = item
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
 
     return <div>
@@ -52,7 +52,18 @@ export default class Line extends Component {
         <Col span={12}>
           <InputNumber
             value={item.symbolSize}
-            onChange={value => onChange({'$set': {'series.$[i].symbolSize': value}}, filter)}
+            onChange={value => onChange({[isNaN(parseFloat(value)) ? '$unset' : '$set']: {'series.$[i].symbolSize': value}}, filter)}
+            />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={12}>
+          线粗细
+        </Col>
+        <Col span={12}>
+          <InputNumber
+            value={lineStyle.width}
+            onChange={value => onChange({[isNaN(parseFloat(value)) ? '$unset' : '$set']: {'series.$[i].lineStyle.width': value}}, filter)}
             />
         </Col>
       </Row>

@@ -1,0 +1,71 @@
+{
+  "color":["#19d4ae","#5ab1ef","#fa6e86","#ffb980","#0067a6","#c4b4e4","#d87a80","#9cbbff","#d9d0c7","#87a997","#d49ea2","#5b4947","#7ba3a8"],
+  "title":{
+      "text":""
+  },
+  "tooltip":{
+      "trigger":"axis"
+  },
+  "legend":{
+      "width":"600",
+      "selectedMode":true
+  },
+  "grid":[{
+      "id": "grid1", 
+      "left":"3%",
+      "right":"4%",
+      "bottom":"3%",
+      "containLabel":true
+  }],
+  "xAxis":[{
+      "id": "xaxis1", 
+      "splitLine":{"show":true},
+      "splitArea":{"show":false},
+      "type":"category",
+      "boundaryGap":false,
+      "axisLabel":{
+          "rotate":45,
+          "interval":90
+      }
+  }],
+  "yAxis":[{
+      "id": "yaxis1", 
+      "splitLine":{"show":true},
+      "splitArea":{"show":false},
+      "type":"value"
+  }, {
+      "id": "yaxis2", 
+      "splitLine":{"show":true},
+      "splitArea":{"show":false},
+      "type":"value"
+  }
+  ],
+  "series":[{
+      "id": "series1",
+      "name":"收盘价",
+      "type":"line",
+      "label":{},
+      "symbolSize": 0,
+      "encode":{
+          "x":"",
+          "y":"收盘价",
+          "seriesName":"收盘价"
+      }, 
+      "xAxisIndex": 0, 
+      "yAxisIndex": 1
+  },
+  {
+      "id": "series2",
+      "name":"成交量",
+      "type":"bar",
+      "barWidth":1,
+      "label":{},
+      "encode":{
+          "x":"",
+          "y":"成交量",
+          "seriesName":"成交量"
+      }, 
+      "xAxisIndex": 0, 
+      "yAxisIndex": 0
+  }]
+}

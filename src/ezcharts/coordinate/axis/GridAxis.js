@@ -74,7 +74,7 @@ export default class GridAxis extends Component {
           </Col>
       </Row>
       <Row>
-          <Col span={12}>显示分隔线</Col>
+          <Col span={12}>网格线</Col>
           <Col span={12}>
             <Switch
             checkedChildren="显示"
@@ -84,7 +84,18 @@ export default class GridAxis extends Component {
           />
           </Col>
       </Row>
-
+      {type === 'category' ? 
+      <Row>
+          <Col span={12}>刻度线</Col>
+          <Col span={12}>
+            <Switch
+            checkedChildren="分隔线"
+            unCheckedChildren="刻度线"
+            checked={item.boundaryGap !== false }
+            onChange={value => onChange({ '$set': { [`${axisType}.$[i].boundaryGap`]: value } }, filter)}
+          />
+          </Col>
+      </Row> : null}
     </div>
   }
 }

@@ -27,6 +27,16 @@ function filterSeries(options) {
         return false
       }
       switch(type) {
+        case 'boxplot':
+          const { encode = {} } = s
+          const { y = []} = encode
+          const uniqueY = {}
+          y.forEach(i => {
+            if (i) {
+              uniqueY[i] = ''
+            }
+          })
+          return Object.keys(uniqueY).length === 5
         case 'line':
         case 'bar':
           const { xAxisIndex = 0, yAxisIndex = 0 } = s

@@ -40,7 +40,7 @@ export default class SeriesPane extends Component {
         showArrow={false}>
       {Series.SERIES_TYPES.map(i => (
               <Option key={'type-' + i[0]} value={i[0]}>
-                <Icon type={i[2]} />
+                <Icon {...i[2]} />
               </Option>
             ))}
       </Select>

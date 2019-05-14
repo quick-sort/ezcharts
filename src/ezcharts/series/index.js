@@ -4,17 +4,19 @@ import { Tooltip, Popconfirm, Button, Drawer, Input, Select, Icon } from 'antd';
 import Line from './Line'
 import Bar from './Bar'
 import Pie from './Pie'
+import Boxplot from './Boxplot'
 import { firstValue } from '../utils'
 const uuidv4 = require('uuid/v4');
 
 const { Option } = Select;
 const SERIES_TYPES = [
-  ['pie', '饼图', 'pie-chart'],
-  ['line', '折线图', 'line-chart'],
-  ['bar', '柱状图', 'bar-chart']
+  ['pie', '饼图', {type: 'pie-chart'}],
+  ['line', '折线图', {type: 'line-chart'}],
+  ['bar', '柱状图', {type: 'bar-chart'}],
+  ['boxplot', '盒须图', {type: 'box-plot', rotate: 90}]
   /*
   ['scatter', '散点图', 'dot-chart'],
-  ['boxplot', '盒须图', 'box-plot'],
+  
   ['candlestick', 'K线图', 'sliders'],
   ['table', '表格', 'table']*/
 ]
@@ -81,6 +83,8 @@ export default class Series extends Component {
       case 'pie':
         return <Pie {...this.props} />
 
+      case 'boxplot':
+        return <Boxplot {...this.props} />
       default:
         //'line'
         return  <Line {...this.props} />
@@ -93,7 +97,7 @@ export default class Series extends Component {
       <Select size="small" onChange={this.onChangeType} value={item.type} showArrow={false} >
       {SERIES_TYPES.map(i => (
               <Option key={'type-' + i[0]} value={i[0]}>
-                <Icon type={i[2]} />
+                <Icon {...i[2]}/>
               </Option>
             ))}
       </Select>
