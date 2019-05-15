@@ -15,10 +15,10 @@ export default class Line extends Component {
     const { onChange, item } = this.props
     const { label = {}, lineStyle = {} } = item
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
-
+    const LSPAN = 8, RSPAN=16;
     return <div>
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           <Switch
             checkedChildren="堆叠"
             unCheckedChildren="不堆叠"
@@ -33,7 +33,7 @@ export default class Line extends Component {
             }
           />
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <Input
             placeholder="堆叠名称"
             disabled={!item.stack}
@@ -46,10 +46,10 @@ export default class Line extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           点大小
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <InputNumber
             value={item.symbolSize}
             onChange={value => onChange({[isNaN(parseFloat(value)) ? '$unset' : '$set']: {'series.$[i].symbolSize': value}}, filter)}
@@ -57,10 +57,10 @@ export default class Line extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           线粗细
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <InputNumber
             value={lineStyle.width}
             onChange={value => onChange({[isNaN(parseFloat(value)) ? '$unset' : '$set']: {'series.$[i].lineStyle.width': value}}, filter)}

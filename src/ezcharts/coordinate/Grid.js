@@ -107,7 +107,7 @@ export default class Grid extends Component {
 
     return <div>
         <Input.Group compact>
-          <Button size="small" type='primary' onClick={this.toggleDrawer}>{name}<Icon type="setting"/></Button>
+          <Button size="small" type='primary' onClick={this.toggleDrawer}>{name.toUpperCase()}<Icon type="setting"/></Button>
           <Popconfirm placement="left" title="确认删除" onConfirm={this.onRemove}>
               <Button size="small" type='danger' icon="delete"/>
           </Popconfirm>

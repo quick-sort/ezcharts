@@ -64,23 +64,23 @@ export default class Label extends Component {
       </div>
   }
   render() {
-    const leftSpan = 6, rightSpan = 18
+    const LSPAN = 6, RSPAN = 18
     return <div>
       <Row>
-        <Col span={leftSpan}>位置</Col>
-        <Col span={rightSpan}>
+        <Col span={LSPAN}>位置</Col>
+        <Col span={RSPAN}>
           {this.renderPosition()}
         </Col>
       </Row>
       <Row>
-        <Col span={leftSpan}>字体</Col>
-        <Col span={rightSpan}>
+        <Col span={LSPAN}>字体</Col>
+        <Col span={RSPAN}>
           {this.renderFont()}
         </Col>
       </Row>
       <Row>
-        <Col span={leftSpan}>格式</Col>
-        <Col span={rightSpan}>
+        <Col span={LSPAN}>格式</Col>
+        <Col span={RSPAN}>
           <Formatter {...this.props} />
         </Col>
       </Row>

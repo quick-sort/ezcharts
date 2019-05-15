@@ -16,12 +16,6 @@ export default class AngleAxis extends Component {
         <Col span={12}>
         </Col>
       </Row>
-      <Row>
-        <Col span={12}>
-        </Col>
-        <Col span={12}>
-        </Col>
-      </Row>
     </div>
   }
 }

@@ -19,12 +19,13 @@ export default class Pie extends Component {
     if (seriesLayoutBy !== 'column') {
       encodeOptions = (dataset[datasetIndex] || { source: [] }).source.map(i => i[0]);
     }
+    const LSPAN = 8, RSPAN = 16;
     return <div>
       <Row>
-        <Col span={8}>
+        <Col span={LSPAN}>
         数据集
         </Col>
-        <Col span={16}>
+        <Col span={RSPAN}>
           <Tooltip title="数据集" >
             <Select
             key="datasetIndex"
@@ -55,10 +56,10 @@ export default class Pie extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={8}>
+        <Col span={LSPAN}>
           类别名称
         </Col>
-        <Col span={16}>
+        <Col span={RSPAN}>
           <Select
             key="encode-itemName"
             value={encode.itemName}
@@ -73,10 +74,10 @@ export default class Pie extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={8}>
+        <Col span={LSPAN}>
           类别数据
         </Col>
-        <Col span={16}>
+        <Col span={RSPAN}>
           <Select
             key="encode-value"
             value={encode.value}
@@ -96,10 +97,10 @@ export default class Pie extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={8}>
+        <Col span={LSPAN}>
           位置
         </Col>
-        <Col span={16}>
+        <Col span={RSPAN}>
         <Input.Group compact>
           <Tooltip title="水平位置" >
             <InputNumber
@@ -135,10 +136,10 @@ export default class Pie extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={8}>
+        <Col span={LSPAN}>
           半径
         </Col>
-        <Col span={16}>
+        <Col span={RSPAN}>
           <Tooltip title="半径">
           <InputNumber
               min={0}

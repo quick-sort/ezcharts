@@ -15,13 +15,13 @@ export default class Boxplot extends Component {
         const { onChange, item } = this.props
         const { boxWidth = [7, 50] } = item
         const filter = { arrayFilters: [{ 'i.id': item.id }] };
-
+        const LSPAN = 8, RSPAN=16;
         return <div>
             <Row>
-                <Col span={12}>
+                <Col span={LSPAN}>
                     宽度
                 </Col>
-                <Col span={12}>
+                <Col span={RSPAN}>
                     <Input.Group compact>
                         <InputNumber
                             value={boxWidth[0]}

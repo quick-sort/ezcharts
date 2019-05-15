@@ -2,6 +2,9 @@
 .ezcharts .ant-select {
   min-width: 38px;
 }
+.ezcharts .ant-row {
+  margin-bottom: 1px;
+}
 .ezcharts .ant-input-group {
   margin-bottom: 5px;
 }

@@ -108,9 +108,10 @@ export default class GridEncode extends Component {
     if (seriesLayoutBy !== 'column') {
       encodeOptions = (dataset[datasetIndex] || { source: [] }).source.map(i => i[0]);
     }
+    const LSPAN = 8, RSPAN=16;
     return <div>
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           <Tooltip title="图" >
             <Select
               key="gridIndex"
@@ -121,7 +122,7 @@ export default class GridEncode extends Component {
             </Select>
           </Tooltip>
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <Tooltip title="数据集" >
             <Select
               key="datasetIndex"
@@ -153,7 +154,7 @@ export default class GridEncode extends Component {
       </Row>
 
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           <Select
             key="xAxis"
             value={item.xAxisIndex || 0}
@@ -162,14 +163,14 @@ export default class GridEncode extends Component {
             {xAxis.map((i, idx) => {
               const { gridIndex = 0 } = i
               if (gridIndex === this.state.gridIndex) {
-                return <Option key={'xAxis' + idx} value={idx}>xAxis{idx + 1}</Option>
+                return <Option key={'x' + idx} value={idx}>x{idx + 1}</Option>
               }
               return null
             })}
 
           </Select>
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <Select
             key="encode-x"
             value={firstValue(encode.x || encodeOptions)}
@@ -185,7 +186,7 @@ export default class GridEncode extends Component {
         </Col>
       </Row>
       <Row >
-        <Col span={12}>
+        <Col span={LSPAN}>
           <Select
             key="yAxis"
             value={item.yAxisIndex || 0}
@@ -194,14 +195,14 @@ export default class GridEncode extends Component {
             {yAxis.map((i, idx) => {
               const { gridIndex = 0 } = i
               if (gridIndex === this.state.gridIndex) {
-                return <Option key={'yAxis' + idx} value={idx}>yAxis{idx + 1}</Option>
+                return <Option key={'y' + idx} value={idx}>y{idx + 1}</Option>
               }
               return null
             })}
 
           </Select>
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           {this.renderEncodeY(encode, encodeOptions, filter)}
         </Col>
       </Row>

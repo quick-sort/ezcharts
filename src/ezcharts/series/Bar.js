@@ -14,11 +14,12 @@ export default class Bar extends Component {
   render() {
     const { onChange, item } = this.props
     const { label = {} } = item
+    const LSPAN = 8, RSPAN=16;
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
 
     return <div>
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           <Switch
             checkedChildren="堆叠"
             unCheckedChildren="不堆叠"
@@ -33,7 +34,7 @@ export default class Bar extends Component {
             }
           />
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <Input
             placeholder="堆叠名称"
             disabled={!item.stack}
@@ -46,10 +47,10 @@ export default class Bar extends Component {
         </Col>
       </Row>
       <Row>
-        <Col span={12}>
+        <Col span={LSPAN}>
           柱宽度
         </Col>
-        <Col span={12}>
+        <Col span={RSPAN}>
           <InputNumber
             value={item.barWidth}
             onChange={value => onChange({'$set': {'series.$[i].barWidth': value}}, filter)}
