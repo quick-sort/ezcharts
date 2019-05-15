@@ -24,9 +24,10 @@ export default class Grid extends Component {
         grid: {
           id: uuidv4(),
           containLabel: true,
-          left: '3%',
-          right: '4%',
-          bottom: '3%'
+          left: '1%',
+          right: '1%',
+          bottom: '1%',
+          top: '1%'
         },
         xAxis: {
           id: uuidv4(),

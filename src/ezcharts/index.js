@@ -8,6 +8,7 @@ import CoordinatePane from './CoordinatePane';
 import SeriesPane from './SeriesPane';
 import JsonPane from './JsonPane'
 import LegendPane from './LegendPane'
+import DataZoomPane from './DataZoomPane'
 
 const { Content, Sider }  = Layout
 export default class EzCharts extends Component {
@@ -76,6 +77,8 @@ export default class EzCharts extends Component {
           <JsonPane option={option} onChange={this.onReplace} />
           <Divider />
           <LegendPane option={option} onChange={this.onChange} />
+          <Divider />
+          <DataZoomPane option={option} onChange={this.onChange} />
         </Sider>
       </Layout>
     );

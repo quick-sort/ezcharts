@@ -60,8 +60,7 @@ export default class Series extends Component {
     const filter = { arrayFilters: [{ 'i.id': item.id }] };
     onChange({
       '$set': {
-        'series.$[i].type': value,
-        'series.$[i].encode': {}
+        'series.$[i].type': value
       }
     }, filter)
   }
