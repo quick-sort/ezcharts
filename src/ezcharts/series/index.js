@@ -5,6 +5,7 @@ import Line from './Line'
 import Bar from './Bar'
 import Pie from './Pie'
 import Boxplot from './Boxplot'
+import Candlestick from './Candlestick'
 import { firstValue } from '../utils'
 const uuidv4 = require('uuid/v4');
 
@@ -13,11 +14,12 @@ const SERIES_TYPES = [
   ['pie', '饼图', {type: 'pie-chart'}],
   ['line', '折线图', {type: 'line-chart'}],
   ['bar', '柱状图', {type: 'bar-chart'}],
-  ['boxplot', '盒须图', {type: 'box-plot', rotate: 90}]
+  ['boxplot', '盒须图', {type: 'box-plot', rotate: 90}],
+  ['candlestick', 'K线图', {type: 'sliders'}]
   /*
   ['scatter', '散点图', 'dot-chart'],
   
-  ['candlestick', 'K线图', 'sliders'],
+  
   ['table', '表格', 'table']*/
 ]
 
@@ -84,6 +86,10 @@ export default class Series extends Component {
 
       case 'boxplot':
         return <Boxplot {...this.props} />
+
+      case 'candlestick':
+        return <Candlestick {...this.props} />
+
       default:
         //'line'
         return  <Line {...this.props} />
@@ -91,10 +97,20 @@ export default class Series extends Component {
   }
   render() {
     const { item } = this.props
+    const { type } = item
+    let compatibles = []
+    switch(type) {
+      case 'line':
+      case 'bar':
+        compatibles = ['line', 'bar']
+        break
+      default:
+        compatibles = [type]
+    }
     return <div>
       <Input.Group compact >
       <Select size="small" onChange={this.onChangeType} value={item.type} showArrow={false} >
-      {SERIES_TYPES.map(i => (
+      {SERIES_TYPES.filter(i => compatibles.includes(i[0])).map(i => (
               <Option key={'type-' + i[0]} value={i[0]}>
                 <Icon {...i[2]}/>
               </Option>

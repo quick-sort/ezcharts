@@ -28,6 +28,7 @@ function filterSeries(options) {
       }
       switch(type) {
         case 'boxplot':
+        case 'candlestick':
           const { encode = {} } = s
           const { y = []} = encode
           const uniqueY = {}
@@ -36,7 +37,12 @@ function filterSeries(options) {
               uniqueY[i] = ''
             }
           })
-          return Object.keys(uniqueY).length === 5
+          switch(type) {
+            case 'boxplot': 
+              return Object.keys(uniqueY).length === 5
+            case 'candlestick':
+              return Object.keys(uniqueY).length === 4
+          }
         case 'line':
         case 'bar':
           const { xAxisIndex = 0, yAxisIndex = 0 } = s

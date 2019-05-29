@@ -1,6 +1,6 @@
 {
   "name": "ezcharts",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "repository": {
     "type": "git",
     "url": "https://github.com/quick-sort/ezcharts.git"
@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "json-beautify": "^1.1.0",
-    "mongobj": "^1.0.7",
+    "mongobj": "^1.0.9",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {

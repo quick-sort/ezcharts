@@ -40,19 +40,22 @@ export default class GridEncode extends Component {
     const { type = 'line' } = this.props.item
     switch (type) {
       case 'boxplot':
-        return this.renderEncodeYList(encode, encodeOptions, filter, 5)
+        return this.renderEncodeYList(encode, encodeOptions, filter, 5, ['max', '3/4', 'median', '1/4', 'min'])
+      case 'candlestick':
+        return this.renderEncodeYList(encode, encodeOptions, filter, 4, ['open', 'close', 'highest', 'lowest'])
       default:
         return this.renderEncodeYSingle(encode, encodeOptions, filter)
     }
   }
 
-  renderEncodeYList = (encode, encodeOptions, filter, count) => {
+  renderEncodeYList = (encode, encodeOptions, filter, count, placeholder) => {
     const { onChange } = this.props
     const { y = Array(count).fill(null) } = encode
     return y.map((yi, idx) => {
       return <Select
-        key="encode-y"
+        key={"encode-y-" + idx}
         value={yi}
+        placeholder={placeholder ? placeholder[idx]: undefined}
         style={{ width: 120 }}
         onChange={value => {
           const val = [...y]
