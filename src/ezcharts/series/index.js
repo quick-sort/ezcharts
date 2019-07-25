@@ -5,7 +5,9 @@ import Line from './Line'
 import Bar from './Bar'
 import Pie from './Pie'
 import Boxplot from './Boxplot'
+import Scatter from './Scatter'
 import Candlestick from './Candlestick'
+import Heatmap from './Heatmap'
 import { firstValue } from '../utils'
 const uuidv4 = require('uuid/v4');
 
@@ -15,12 +17,9 @@ const SERIES_TYPES = [
   ['line', '折线图', {type: 'line-chart'}],
   ['bar', '柱状图', {type: 'bar-chart'}],
   ['boxplot', '盒须图', {type: 'box-plot', rotate: 90}],
-  ['candlestick', 'K线图', {type: 'sliders'}]
-  /*
-  ['scatter', '散点图', 'dot-chart'],
-  
-  
-  ['table', '表格', 'table']*/
+  ['candlestick', 'K线图', {type: 'sliders'}],
+  ['scatter', '散点图', {type: 'dot-chart'}],
+  ['heatmap', '热力图', {type: 'heat-map'}]
 ]
 
 export default class Series extends Component {
@@ -83,6 +82,9 @@ export default class Series extends Component {
 
       case 'pie':
         return <Pie {...this.props} />
+      
+      case 'scatter':
+        return <Scatter {...this.props} />
 
       case 'boxplot':
         return <Boxplot {...this.props} />
@@ -90,6 +92,8 @@ export default class Series extends Component {
       case 'candlestick':
         return <Candlestick {...this.props} />
 
+      case 'heatmap': 
+        return <Heatmap {...this.props} />
       default:
         //'line'
         return  <Line {...this.props} />
@@ -102,7 +106,8 @@ export default class Series extends Component {
     switch(type) {
       case 'line':
       case 'bar':
-        compatibles = ['line', 'bar']
+      case 'scatter':
+        compatibles = ['line', 'bar', 'scatter']
         break
       default:
         compatibles = [type]

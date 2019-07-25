@@ -27,7 +27,7 @@ export default class Grid extends Component {
           left: '1%',
           right: '1%',
           bottom: '1%',
-          top: '1%'
+          top: '10%'
         },
         xAxis: {
           id: uuidv4(),
